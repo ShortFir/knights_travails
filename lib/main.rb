@@ -7,7 +7,7 @@ require_relative 'board'
 class Play
   def initialize
     @board = Board.new
-    @knight = Knight.new
+    @knight = Knight.new(@board.board.keys)
   end
 
   def game
@@ -15,9 +15,12 @@ class Play
     @board.display
     # sleep 1
     # puts "\e[H\e[2J"
+    puts @knight.moves
     @board.place_piece(@knight)
     @board.display
     puts @board.board
+    puts "moves.grid: #{@knight.moves.grid}"
+    # puts "moves.n1n2: #{@knight.moves.n1n2}"
   end
 end
 

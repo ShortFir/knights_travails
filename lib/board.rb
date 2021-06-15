@@ -2,6 +2,7 @@
 
 # Chess Board
 class Board
+  HASH_DEFAULT = ' '
   attr_reader :board
 
   def initialize
@@ -47,7 +48,7 @@ class Board
     8.times.with_object({}) do |row, hash|
       8.times do |column|
         array = [row, column]
-        hash.store(array, ' ')
+        hash.store(array, HASH_DEFAULT)
       end
     end
   end
