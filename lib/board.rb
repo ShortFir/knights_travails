@@ -12,17 +12,13 @@ class Board
 
   def display
     # display_board_array
-    display_board_hash
+    print display_board_hash
   end
 
   def place_piece(piece, position = [0, 0])
     # @board[position[1]][position[0]] = piece
     @board[position] = piece
   end
-
-  # def update_display(loc = [0, 0])
-  #   @board[loc[1]][loc[0]] = yield if block_given?
-  # end
 
   private
 
@@ -53,21 +49,25 @@ class Board
     end
   end
 
-  # TODO: Rework to interpolate line, constructed in another method #{line'1'} etc...
-  # rubocop:disable Metrics/AbcSize, Naming/MethodParameterName, Metrics/MethodLength
-  def display_board_hash(b = @board)
-    chess = <<~BOARD
-      7 #{b[[0, 7]]} #{b[[1, 7]]} #{b[[2, 7]]} #{b[[3, 7]]} #{b[[4, 7]]} #{b[[5, 7]]} #{b[[6, 7]]} #{b[[7, 7]]}
-      6 #{b[[0, 6]]} #{b[[1, 6]]} #{b[[2, 6]]} #{b[[3, 6]]} #{b[[4, 6]]} #{b[[5, 6]]} #{b[[6, 6]]} #{b[[7, 6]]}
-      5 #{b[[0, 5]]} #{b[[1, 5]]} #{b[[2, 5]]} #{b[[3, 5]]} #{b[[4, 5]]} #{b[[5, 5]]} #{b[[6, 5]]} #{b[[7, 5]]}
-      4 #{b[[0, 4]]} #{b[[1, 4]]} #{b[[2, 4]]} #{b[[3, 4]]} #{b[[4, 4]]} #{b[[5, 4]]} #{b[[6, 4]]} #{b[[7, 4]]}
-      3 #{b[[0, 3]]} #{b[[1, 3]]} #{b[[2, 3]]} #{b[[3, 3]]} #{b[[4, 3]]} #{b[[5, 3]]} #{b[[6, 3]]} #{b[[7, 3]]}
-      2 #{b[[0, 2]]} #{b[[1, 2]]} #{b[[2, 2]]} #{b[[3, 2]]} #{b[[4, 2]]} #{b[[5, 2]]} #{b[[6, 2]]} #{b[[7, 2]]}
-      1 #{b[[0, 1]]} #{b[[1, 1]]} #{b[[2, 1]]} #{b[[3, 1]]} #{b[[4, 1]]} #{b[[5, 1]]} #{b[[6, 1]]} #{b[[7, 1]]}
-      0 #{b[[0, 0]]} #{b[[1, 0]]} #{b[[2, 0]]} #{b[[3, 0]]} #{b[[4, 0]]} #{b[[5, 0]]} #{b[[6, 0]]} #{b[[7, 0]]}
+  def display_board_hash
+    <<~BOARD
+      7 #{board_hash_lines(7).chomp}
+      6 #{board_hash_lines(6).chomp}
+      5 #{board_hash_lines(5).chomp}
+      4 #{board_hash_lines(4).chomp}
+      3 #{board_hash_lines(3).chomp}
+      2 #{board_hash_lines(2).chomp}
+      1 #{board_hash_lines(1).chomp}
+      0 #{board_hash_lines(0).chomp}
         0 1 2 3 4 5 6 7
     BOARD
-    print chess
   end
-  # rubocop:enable Metrics/AbcSize, Naming/MethodParameterName, Metrics/MethodLength
+
+  # rubocop:disable Naming/MethodParameterName
+  def board_hash_lines(row, b = @board)
+    <<~LINES
+      #{b[[0, row]]} #{b[[1, row]]} #{b[[2, row]]} #{b[[3, row]]} #{b[[4, row]]} #{b[[5, row]]} #{b[[6, row]]} #{b[[7, row]]}
+    LINES
+  end
+  # rubocop:enable Naming/MethodParameterName
 end

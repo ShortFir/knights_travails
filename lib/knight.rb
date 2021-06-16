@@ -4,6 +4,7 @@
 class Knight
   attr_reader :moves
 
+  # Should root node be where the knight is on the board...?
   def initialize(board_array)
     @moves = construct_move_graph(board_array)
   end
