@@ -51,23 +51,21 @@ class Board
 
   def display_board_hash
     <<~BOARD
-      7 #{board_hash_lines(7).chomp}
-      6 #{board_hash_lines(6).chomp}
-      5 #{board_hash_lines(5).chomp}
-      4 #{board_hash_lines(4).chomp}
-      3 #{board_hash_lines(3).chomp}
-      2 #{board_hash_lines(2).chomp}
-      1 #{board_hash_lines(1).chomp}
-      0 #{board_hash_lines(0).chomp}
+      7 #{board_line(7)}
+      6 #{board_line(6)}
+      5 #{board_line(5)}
+      4 #{board_line(4)}
+      3 #{board_line(3)}
+      2 #{board_line(2)}
+      1 #{board_line(1)}
+      0 #{board_line(0)}
         0 1 2 3 4 5 6 7
     BOARD
   end
 
   # rubocop:disable Naming/MethodParameterName
-  def board_hash_lines(row, b = @board)
-    <<~LINES
-      #{b[[0, row]]} #{b[[1, row]]} #{b[[2, row]]} #{b[[3, row]]} #{b[[4, row]]} #{b[[5, row]]} #{b[[6, row]]} #{b[[7, row]]}
-    LINES
+  def board_line(n, b = @board)
+    "#{b[[0, n]]} #{b[[1, n]]} #{b[[2, n]]} #{b[[3, n]]} #{b[[4, n]]} #{b[[5, n]]} #{b[[6, n]]} #{b[[7, n]]}"
   end
   # rubocop:enable Naming/MethodParameterName
 end

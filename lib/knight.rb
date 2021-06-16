@@ -10,8 +10,10 @@ class Knight
   end
 
   # Print/show series of moves from 'start' to 'finish'
-  def knight_moves(start = [], finish = [])
+  def knight_moves(start = [], finish = [], start_node = nil)
     puts "Moves: #{start} #{finish}"
+    @moves.each { |node| start_node = node if node.grid == start }
+    puts "Start Node: #{start_node.grid}" unless start_node.nil?
   end
 
   def self.icon
@@ -23,6 +25,18 @@ class Knight
   end
 
   private
+
+  #########
+  # MOVES #
+  #########
+
+  #############
+  # MOVES END #
+  #############
+
+  ###############
+  # BUILD GRAPH #
+  ###############
 
   # TODO: overly complex? Do with recursion?...
   def construct_move_graph(board_array)
@@ -38,7 +52,7 @@ class Knight
         node.instance_variable_set(var, match_to_node(grid_nodes, node, var))
       end
     end
-    grid_nodes[0]
+    grid_nodes
   end
 
   def match_to_node(grid_nodes, match_node, var)
@@ -70,6 +84,9 @@ class Knight
       :@r2d1 => [2, -1]
     }[var]
   end
+  ###################
+  # BUILD GRAPH END #
+  ###################
 end
 
 # first digit = left/right, second digit = up/down

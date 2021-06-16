@@ -11,16 +11,32 @@ class Play
   end
 
   def game
-    # puts "\e[H\e[2J"
-    # sleep 1
-    @board.display
-    @board.place_piece(@knight)
-    @board.display
+    # fill_board(@knight)
 
-    # print @knight.moves, "\n"
-    # print @knight.moves.l2d1, "\n"
-    # print @knight.moves.r2u1, "\n"
-    # print @knight.moves.r2u1.l2d1, "\n"
+    @knight.moves.each_with_index do |node, index|
+      print "Node #{index + 1}: Grid #{node.grid}: #{node}\n"
+    end
+
+    @knight.knight_moves([0, 0], [1, 2])
+    # @knight.knight_moves([0, 0], [3, 3])
+    # @knight.knight_moves([3, 3], [0, 0])
+    # [[0,0],[1,2]]
+    # [[0,0],[1,2],[3,3]]
+    # [[3,3],[1,2],[0,0]]
+  end
+
+  def fill_board(piece)
+    @board.board.each_key do |grid|
+      show_board
+      @board.place_piece(piece, grid)
+      sleep 0.04
+    end
+    show_board
+  end
+
+  def show_board
+    print "\e[H\e[2J"
+    @board.display
   end
 end
 
