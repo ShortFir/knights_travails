@@ -16,8 +16,8 @@ class Play
     # sleep 1
     # puts "\e[H\e[2J"
     puts @knight.moves
-    @board.place_piece(@knight)
-    @board.display
+    # @board.place_piece(@knight)
+    # @board.display
     puts @board.board
     puts "moves.grid: #{@knight.moves.grid}"
     # puts "moves.n1n2: #{@knight.moves.n1n2}"
