@@ -12,14 +12,16 @@ class Play
 
   def game
     # puts "\e[H\e[2J"
-    @board.display
     # sleep 1
-    # puts "\e[H\e[2J"
-    puts @knight.moves
+    @board.display
+    print @knight.moves, "\n"
+    print @knight.moves.l2d1, "\n"
+    print @knight.moves.r2u1, "\n"
+    print @knight.moves.r2u1.l2d1, "\n"
     # @board.place_piece(@knight)
     # @board.display
-    puts @board.board
-    puts "moves.grid: #{@knight.moves.grid}"
+    # puts @board.board
+    # puts "moves.grid: #{@knight.moves.grid}"
     # puts "moves.n1n2: #{@knight.moves.n1n2}"
   end
 end
