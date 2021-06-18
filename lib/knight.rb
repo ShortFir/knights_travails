@@ -10,10 +10,15 @@ class Knight
   end
 
   # Print/show series of moves from 'start' to 'finish'
-  def knight_moves(start = [], finish = [], start_node = nil)
-    puts "Moves: #{start} #{finish}"
-    @moves.each { |node| start_node = node if node.grid == start }
-    puts "Start Node: #{start_node.grid}" unless start_node.nil?
+  def knight_moves(start, finish, start_node = nil, finish_node = nil)
+    @moves.each do |node|
+      start_node = node if node.grid == start
+      finish_node = node if node.grid == finish
+    end
+    move_array = knight_move_rec([start_node], finish_node)
+    print_array = move_array.each_with_object([]) { |move, a| a << move.grid }
+    puts '---'
+    print_array.each_with_index { |grid, ind| puts "GRID #{ind}: #{grid}" }
   end
 
   def self.icon
@@ -29,6 +34,28 @@ class Knight
   #########
   # MOVES #
   #########
+
+  def knight_move_rec(queue, finish, index = 0)
+    return if index == 64
+    return queue if queue[index].grid == finish.grid
+
+    move_queue(queue, queue[index])
+    knight_move_rec(queue, finish, index + 1)
+    queue
+  end
+
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def move_queue(queue, node)
+    queue << node.l2u1 unless node.l2u1.nil? || queue.any?(node.l2u1)
+    queue << node.l2d1 unless node.l2d1.nil? || queue.any?(node.l2d1)
+    queue << node.l1u2 unless node.l1u2.nil? || queue.any?(node.l1u2)
+    queue << node.l1d2 unless node.l1d2.nil? || queue.any?(node.l1d2)
+    queue << node.r1u2 unless node.r1u2.nil? || queue.any?(node.r1u2)
+    queue << node.r1d2 unless node.r1d2.nil? || queue.any?(node.r1d2)
+    queue << node.r2u1 unless node.r2u1.nil? || queue.any?(node.r2u1)
+    queue << node.r2d1 unless node.r2d1.nil? || queue.any?(node.r2d1)
+  end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   #############
   # MOVES END #
