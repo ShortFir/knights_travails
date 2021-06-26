@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 # Creates a search algorithm to determine moves
+# rubocop:disable Metrics/ClassLength
 class Knight
-  attr_reader :moves
+  attr_reader :moves, :adjacency_list
 
   # Should root node be where the knight is on the board...?
   def initialize(board_array)
     @moves = construct_move_graph(board_array)
+    @adjacency_list = build_adjacency_list(board_array)
   end
 
   # Print/show series of moves from 'start' to 'finish'
@@ -60,6 +62,49 @@ class Knight
   #############
   # MOVES END #
   #############
+
+  ###################################
+  # BUILD ADJACENCY LIST - NO NODES #
+  ###################################
+
+  def build_adjacency_list(board_array)
+    board_array.each_with_object({}) do |vertex, hash|
+      hash[vertex] = array_of_adjaceny(vertex)
+    end
+  end
+
+  def array_of_adjaceny(vertex)
+    vertex_moves.each_with_object([]) do |move, array|
+      add_edge = make_moves(vertex, move)
+      array << add_edge unless add_edge.nil?
+    end
+  end
+
+  def make_moves(vertex, move)
+    first = vertex[0] + move[0]
+    second = vertex[1] + move[1]
+    return nil if first.negative? || first > 7
+    return nil if second.negative? || second > 7
+
+    [first, second]
+  end
+
+  def vertex_moves
+    [
+      [-2, 1],
+      [-2, -1],
+      [-1, 2],
+      [-1, -2],
+      [1, 2],
+      [1, -2],
+      [2, 1],
+      [2, -1]
+    ]
+  end
+
+  ######################
+  # ADJACENCY LIST END #
+  ######################
 
   ###############
   # BUILD GRAPH #
@@ -133,3 +178,4 @@ class KnightNode
     @r2d1 = nil
   end
 end
+# rubocop:enable Metrics/ClassLength
