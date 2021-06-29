@@ -12,14 +12,15 @@ class Play
 
   def game
     # print @board.board.keys
-    puts @knight.adjacency_list
-    # fill_board(@knight)
+    # puts @knight.adjacency_list
 
-    # @knight.moves.each_with_index do |node, index|
-    #   print "Node #{index + 1}: Grid #{node.grid}: #{node}\n"
+    # @knight.adjacency_list.each do |key|
+    #   print "#{key}\n"
     # end
 
-    # @knight.knight_moves([0, 0], [1, 2])
+    # fill_board(@knight)
+
+    @knight.knight_moves([0, 0], [1, 2])
     # @knight.knight_moves([0, 0], [3, 3])
     # @knight.knight_moves([3, 3], [0, 0])
     # [[0,0],[1,2]]
