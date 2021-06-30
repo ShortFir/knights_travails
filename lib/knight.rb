@@ -9,7 +9,7 @@ class Knight
   # TODO: Return array, so can do fancy board graphics in main
   # Print list of moves from 'start' to 'finish'
   def knight_moves(start, finish)
-    move_array = start_to_finish(start, finish.clone)
+    move_array = start_to_finish(start.clone, finish.clone)
     puts "You made it in #{move_array.length - 1} moves! Here's your path:"
     move_array.each do |move|
       print "#{move}\n"
@@ -41,7 +41,7 @@ class Knight
   end
 
   # TODO: Clean up this nonsense
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
   def moves(queue)
     search = @adjacency_list.clone
     search.each { |key, _value| search[key] = nil }
@@ -64,7 +64,7 @@ class Knight
     end
     search
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   ################
   # ADJACENCY LIST
