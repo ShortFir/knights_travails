@@ -20,7 +20,14 @@ class Play
 
     # fill_board(@knight)
 
-    @knight.knight_moves([0, 0], [1, 2])
+    @knight.knight_moves([0, 0], [7, 7])
+
+    # print "knight_moves([0, 0], [1, 2]) == #{@knight.knight_moves([0, 0], [1, 2])}\n"
+    # print "knight_moves([0, 0], [3, 3]) == #{@knight.knight_moves([0, 0], [3, 3])}\n"
+    # print "knight_moves([3, 3], [0, 0]) == #{@knight.knight_moves([3, 3], [0, 0])}\n"
+    # print "knight_moves([0, 0], [7, 7]) == #{@knight.knight_moves([0, 0], [7, 7])}\n"
+
+    # @knight.knight_moves([0, 0], [1, 2])
     # @knight.knight_moves([0, 0], [3, 3])
     # @knight.knight_moves([3, 3], [0, 0])
     # [[0,0],[1,2]]

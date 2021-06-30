@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Creates a search algorithm to determine moves
+# rubocop:disable Metrics/ClassLength
 class Knight
   attr_reader :adjacency_list
 
@@ -9,6 +10,7 @@ class Knight
   end
 
   # Return array of moves from 'start' to 'finish'
+  # rubocop:disable Metrics/MethodLength
   def knight_moves(start, finish)
     # @moves.each do |node|
     #   start_node = node if node.grid == start
@@ -18,8 +20,13 @@ class Knight
     # print_array = move_array.each_with_object([]) { |move, a| a << move.grid }
     # puts '---'
     # print_array.each_with_index { |grid, ind| puts "GRID #{ind}: #{grid}" }
-    moves([start], finish)
+    move_array = start_to_finish(start, finish.clone)
+    puts "You made it in #{move_array.length - 1} moves! Here's your path:"
+    move_array.each do |move|
+      print "#{move}\n"
+    end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def self.icon
     '♘'
@@ -34,12 +41,90 @@ class Knight
   # Knight Moves
   ##############
 
+  def start_to_finish(start, move, index = 0, move_array = [])
+    move_tree = moves([start])
+    until move.nil?
+      move_array << move
+      move = move_tree[move_array[index]][1]
+      index += 1
+    end
+    move_array.reverse
+  end
+
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def moves(queue)
+    search = @adjacency_list.clone
+    search.each { |key, _value| search[key] = nil }
+    search[queue[0]] = [0, nil]
+    # distance = 0
+    # origin = nil
+    # count = 0
+    # puts search
+    # added = 0
+    # search.each { |key| print "Key #{added += 1}: #{key}\n" }
+    # until queue[count].nil?
+    # end
+    # print queue, ' ', queue.length, "\n"
+    # until queue.nil?
+    loop do
+      node = queue.shift
+      break if node.nil?
+
+      # origin = search[node][1]
+      # begin
+      #   distance = search[origin][0] + 1
+      # rescue
+      #   distance = 0
+      # else
+      #   distance = search[origin][0] + 1
+      # end
+      # distance = search[origin][0] + 1 unless origin.nil?
+      # queue += @adjacency_list[node]
+      # queue.uniq!
+      origin = search[node][1]
+      distance = (origin.nil? ? 0 : search[origin][0] + 1)
+      add = @adjacency_list[node].each_with_object([]) do |grid, array|
+        array << grid if search[grid].nil?
+      end
+      queue += add
+      queue.each do |grid|
+        # distance = search[origin][0] + 1 unless origin.nil?
+        search[grid] = [distance + 1, node] if search[grid].nil?
+      end
+      # distance += 1
+      # distance = search[origin][0] + 1 unless search[origin].nil?
+      # print origin, "\n"
+      # print distance, "\n"
+      # gets
+      # count += 1
+      # if count.zero?
+      #   distance += 1
+      #   origin = Array.new(node)
+      #   count = add_array.length
+      # end
+      # count -= 1
+      # print "Node:  #{node}\n"
+      # print "Queue: #{queue}\n"
+      # gets
+      # count += 1
+      # print queue, "\n"
+      # gets
+    end
+    # added = 0
+    # search.each { |key| print "Key #{added += 1}: #{key}\n" }
+    # for value in (0..10) do
+    #   search.each { |key| print "Distance #{value}: #{key}\n" if key[1][0] == value}
+    # end
+    search
+  end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
-  def moves(queue, _finish)
+  def old_moves(queue, _finish)
     search = {}
     distance = 0
-    count = 0
     origin = nil
+    count = 0
     until search.length == 64
       node = queue.shift
       # filter stuff that's alreay visited
@@ -59,10 +144,10 @@ class Knight
       count -= 1
       print "Node:  #{node}\n"
       print "Queue: #{queue}\n"
-      added = 0
-      search.each { |key| print "Key #{added += 1}: #{key}\n" }
       # gets
     end
+    added = 0
+    search.each { |key| print "Key #{added += 1}: #{key}\n" }
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
 
@@ -122,3 +207,4 @@ class Knight
   end
   ######################
 end
+# rubocop:enable Metrics/ClassLength
