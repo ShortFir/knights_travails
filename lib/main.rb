@@ -27,22 +27,32 @@ class Play
     # print "knight_moves([0, 0], [7, 7]) == #{@knight.knight_moves([0, 0], [7, 7])}\n"
   end
 
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def knight_moving_display
-    print 'Start  Pos:'
-    start = gets.chomp.split('').map(&:to_i)
-    print 'Finish Pos:'
-    finish = gets.chomp.split('').map(&:to_i)
-    print start, finish, "\n"
-    moves = @knight.knight_moves(start, finish)
+    show_board
+    start, finish = user_input
+    display_moves(start, finish)
+    print "\n", 'All done!', "\n", 'Press enter to exit.'
+    gets
+    clear_screen
+  end
+
+  def display_moves(start, finish)
     @board.place_piece(@knight, start)
+    moves = @knight.knight_moves(start, finish)
     moves.each_with_index do |ele, index|
       show_board
       sleep 0.5
       @board.move_piece(ele, moves[index + 1])
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+
+  def user_input
+    print "\n", 'Start  Pos (2 Int):'
+    start = gets.chomp.split('').map(&:to_i)
+    print 'Finish Pos (2 Int):'
+    finish = gets.chomp.split('').map(&:to_i)
+    [start, finish]
+  end
 
   def fill_board(piece)
     @board.board.each_key do |grid|
@@ -54,8 +64,12 @@ class Play
   end
 
   def show_board
-    print "\e[H\e[2J"
+    clear_screen
     @board.display
+  end
+
+  def clear_screen
+    print "\e[H\e[2J"
   end
 end
 
