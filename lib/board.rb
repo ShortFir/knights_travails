@@ -20,6 +20,12 @@ class Board
     @board[position] = piece
   end
 
+  def move_piece(from, too)
+    temp = @board[from]
+    @board[from] = ' '
+    @board[too] = temp
+  end
+
   private
 
   def construct_board_array
