@@ -9,11 +9,12 @@ class Knight
   # TODO: Return array, so can do fancy board graphics in main
   # Print list of moves from 'start' to 'finish'
   def knight_moves(start, finish)
-    move_array = start_to_finish(start.clone, finish.clone)
-    puts "You made it in #{move_array.length - 1} moves! Here's your path:"
-    move_array.each do |move|
-      print "#{move}\n"
-    end
+    start_to_finish(start.clone, finish.clone)
+    # move_array = start_to_finish(start.clone, finish.clone)
+    # puts "You made it in #{move_array.length - 1} moves! Here's your path:"
+    # move_array.each do |move|
+    #   print "#{move}\n"
+    # end
   end
 
   def self.icon
