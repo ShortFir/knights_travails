@@ -2,7 +2,10 @@
 
 # Chess Board
 class Board
-  HASH_DEFAULT = ' '
+  HASH_DEFAULT = '  '
+  SPACE = '  '
+  HASH_WHITE = "\e[47m#{SPACE}\e[0m"
+  HASH_BLACK = "\e[40m#{SPACE}\e[0m"
   attr_reader :board
 
   def initialize
@@ -22,7 +25,7 @@ class Board
 
   def move_piece(from, too)
     temp = @board[from]
-    @board[from] = ' '
+    @board[from] = HASH_BLACK
     @board[too] = temp
   end
 
@@ -50,7 +53,7 @@ class Board
     8.times.with_object({}) do |row, hash|
       8.times do |column|
         array = [row, column]
-        hash.store(array, HASH_DEFAULT)
+        hash.store(array, HASH_WHITE)
       end
     end
   end
@@ -71,7 +74,7 @@ class Board
 
   # rubocop:disable Naming/MethodParameterName
   def board_line(n, b = @board)
-    "#{b[[0, n]]} #{b[[1, n]]} #{b[[2, n]]} #{b[[3, n]]} #{b[[4, n]]} #{b[[5, n]]} #{b[[6, n]]} #{b[[7, n]]}"
+    "#{b[[0, n]]}#{b[[1, n]]}#{b[[2, n]]}#{b[[3, n]]}#{b[[4, n]]}#{b[[5, n]]}#{b[[6, n]]}#{b[[7, n]]}"
   end
   # rubocop:enable Naming/MethodParameterName
 end
