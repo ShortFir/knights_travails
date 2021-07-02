@@ -17,8 +17,10 @@ class Knight
     # end
   end
 
+  # Icon takes two spaces, so needs the extra space to fit the board correctly.
   def self.icon
-    '♘'
+    # '♘ '
+    "\e[1;31;40m♘ \e[0m"
   end
 
   def to_s
