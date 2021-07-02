@@ -6,8 +6,6 @@ class Knight
     @adjacency_list = build_adjacency_list(board_array)
   end
 
-  # TODO: Return array, so can do fancy board graphics in main
-  # Print list of moves from 'start' to 'finish'
   def knight_moves(start, finish)
     start_to_finish(start.clone, finish.clone)
     # move_array = start_to_finish(start.clone, finish.clone)
@@ -17,9 +15,8 @@ class Knight
     # end
   end
 
-  # Icon takes two spaces, so needs the extra space to fit the board correctly.
+  # Icon takes up two spaces, so needs the extra space to fit the board correctly.
   def self.icon
-    # '♘ '
     "\e[1;31;40m♘ \e[0m"
   end
 
@@ -43,31 +40,42 @@ class Knight
     move_array.reverse
   end
 
-  # TODO: Clean up this nonsense
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
-  def moves(queue)
-    search = @adjacency_list.clone
-    search.each { |key, _value| search[key] = nil }
-    search[queue[0]] = [0, nil]
+  def moves(queue, search = @adjacency_list.clone)
+    build_search_list(queue, search)
     loop do
       node = queue.shift
       break if node.nil?
 
-      origin = search[node][1]
-      distance = (origin.nil? ? 0 : search[origin][0] + 1)
-
-      add = @adjacency_list[node].each_with_object([]) do |grid, array|
-        array << grid if search[grid].nil?
-      end
-      queue += add
-
-      queue.each do |grid|
-        search[grid] = [distance + 1, node] if search[grid].nil?
-      end
+      distance = return_distance(node, search)
+      queue += add_to_queue(node, search)
+      write_to_search(queue, search, distance, node)
     end
     search
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity
+
+  def build_search_list(queue, search)
+    search.each do |grid_key, _value|
+      search[grid_key] = nil
+    end
+    search[queue[0]] = [0, nil]
+  end
+
+  def return_distance(node, search)
+    origin = search[node][1]
+    origin.nil? ? 0 : search[origin][0] + 1
+  end
+
+  def add_to_queue(node, search)
+    @adjacency_list[node].each_with_object([]) do |grid, array|
+      array << grid if search[grid].nil?
+    end
+  end
+
+  def write_to_search(queue, search, distance, node)
+    queue.each do |grid|
+      search[grid] = [distance + 1, node] if search[grid].nil?
+    end
+  end
 
   ################
   # ADJACENCY LIST
